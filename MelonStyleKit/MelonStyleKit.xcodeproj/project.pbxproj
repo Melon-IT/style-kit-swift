@@ -10,6 +10,7 @@
 		4023C7881C67AE3400EEB929 /* MelonStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4023C7871C67AE3400EEB929 /* MelonStyleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4023C78F1C67AE3500EEB929 /* MelonStyleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4023C7841C67AE3400EEB929 /* MelonStyleKit.framework */; };
 		4023C7941C67AE3500EEB929 /* MelonStyleKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4023C7931C67AE3500EEB929 /* MelonStyleKitTests.swift */; };
+		408B25611C6A62AA00E9C360 /* MBFStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408B25601C6A62AA00E9C360 /* MBFStyleKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		4023C78E1C67AE3500EEB929 /* MelonStyleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MelonStyleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4023C7931C67AE3500EEB929 /* MelonStyleKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelonStyleKitTests.swift; sourceTree = "<group>"; };
 		4023C7951C67AE3500EEB929 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		408B25601C6A62AA00E9C360 /* MBFStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBFStyleKit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		4023C7861C67AE3400EEB929 /* MelonStyleKit */ = {
 			isa = PBXGroup;
 			children = (
+				408B255F1C6A628F00E9C360 /* StyleKit */,
 				4023C7871C67AE3400EEB929 /* MelonStyleKit.h */,
 				4023C7891C67AE3400EEB929 /* Info.plist */,
 			);
@@ -84,6 +87,14 @@
 				4023C7951C67AE3500EEB929 /* Info.plist */,
 			);
 			path = MelonStyleKitTests;
+			sourceTree = "<group>";
+		};
+		408B255F1C6A628F00E9C360 /* StyleKit */ = {
+			isa = PBXGroup;
+			children = (
+				408B25601C6A62AA00E9C360 /* MBFStyleKit.swift */,
+			);
+			name = StyleKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				408B25611C6A62AA00E9C360 /* MBFStyleKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +320,7 @@
 		4023C7991C67AE3500EEB929 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -318,12 +331,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melon-it.MelonStyleKit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		4023C79A1C67AE3500EEB929 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -376,6 +391,7 @@
 				4023C79A1C67AE3500EEB929 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4023C79B1C67AE3500EEB929 /* Build configuration list for PBXNativeTarget "MelonStyleKitTests" */ = {
 			isa = XCConfigurationList;
@@ -384,6 +400,7 @@
 				4023C79D1C67AE3500EEB929 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
