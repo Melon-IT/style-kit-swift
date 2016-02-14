@@ -9,7 +9,18 @@
 import Foundation
 
 public class MBFStyleKit {
-
+  
+  private static let mbfStyleKitColorsKey = "colors"
+  private static let mbfStyleKitFontsKey = "fonts"
+  private static let mbfStyleKitFontNameKey = "name"
+  private static let mbfStyleKitFontSizeKey = "size"
+  private static let mbfStyleKitStylesKey = "styles"
+  private static let mbfStyleKitTextSize = "text-size"
+  private static let mbfStyleKitTextColor = "text-color"
+  private static let mbfStyleKitTextAlignment = "text-alignment"
+  private static let mbfStyleKitParagraphSpacing = "paragraph-spacing"
+  private static let mbfStyleKitLineSpacing = "line-spacing"
+  
   public var defaultStyle: NSDictionary? {
     
     return nil
@@ -37,7 +48,7 @@ public class MBFStyleKit {
       self.styles = nil
     }
   }
-
+  
   public func colorForKey(key: String) -> UIColor {
     
     return self.colorForKey(key, alpha: 1.0)
@@ -46,8 +57,8 @@ public class MBFStyleKit {
   public func colorForKey(key: String, alpha: Float) -> UIColor {
     var resultColor: UIColor
     var colorValue: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
-
-    colorValue = self.decodeColor(self.styles?["colors"]?["asd"]??["rgba"] as? String)
+    
+    colorValue = self.decodeColor(self.styles?[MBFStyleKit.mbfStyleKitColorsKey]?[key] as? String)
     
     resultColor = UIColor(red: colorValue.red as CGFloat, green: colorValue.green, blue: colorValue.blue, alpha: colorValue.alpha)
     
@@ -56,12 +67,15 @@ public class MBFStyleKit {
   
   private func decodeColor(string: String?) -> (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
     var result: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
-    result = (red: CGFloat(0), green: CGFloat(0), blue: CGFloat(0), alpha: CGFloat(1.0))
+    result = (red: CGFloat(0.0), green: CGFloat(0), blue: CGFloat(0), alpha: CGFloat(1.0))
     
+
     if let colorString = string {
+      result.red = 2.0
       let components = colorString.componentsSeparatedByString(" ")
       
-      if components.count == 3 {
+      if components.count == 4 {
+     
         if let red = Float(components[0]) {
           result.red = CGFloat(red/255.0)
         }
@@ -74,10 +88,10 @@ public class MBFStyleKit {
           result.blue = CGFloat(blue/255.0)
         }
         
-      } else if components.count == 4 {
         if let alpha = Float(components[3]) {
           result.alpha = CGFloat(alpha)
         }
+        
       }
     }
     
@@ -93,18 +107,23 @@ public class MBFStyleKit {
     var textAttributes = Dictionary<String,Any>()
     var paragraphAttributes: NSMutableParagraphStyle
     
-
-      paragraphAttributes =
-        self.paragraphAttributesWithSpacing(1,
-          textAlignment: NSTextAlignment.Left,
-          lineBreakMode: NSLineBreakMode.ByCharWrapping,
-          lineSpacing: 1.0)
-      
-      textAttributes =
-        self.textAttributesWithFont("", fontSize: 10.0, textColor: UIColor.blackColor(), paragraphStyle: paragraphAttributes)
+    let color = self.colorForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextColor] as! String)
+    let textAlignment = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextAlignment] as! Int
+    let paragraphSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitParagraphSpacing] as! Float
+    let lineSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitLineSpacing] as! Float
+    let textSize = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextSize] as! Float
     
-    if textAlignment != NSTextAlignment.Natural {
-      paragraphAttributes.alignment = textAlignment
+    paragraphAttributes =
+      self.paragraphAttributesWithSpacing(paragraphSpacing,
+        textAlignment: NSTextAlignment(rawValue: textAlignment)!,
+        lineBreakMode: NSLineBreakMode.ByCharWrapping,
+        lineSpacing: lineSpacing)
+    
+    textAttributes =
+      self.textAttributesWithFont("", fontSize: textSize, textColor: color, paragraphStyle: paragraphAttributes)
+    
+    if textAlignment != NSTextAlignment.Natural.rawValue {
+      paragraphAttributes.alignment = NSTextAlignment(rawValue: textAlignment)!
     }
     
     return textAttributes
@@ -117,11 +136,11 @@ public class MBFStyleKit {
     
     font = (name: "", size: 10.0)
     
-    if let fontName = self.styles?["fonts"]?[key]??["name"] as? String {
+    if let fontName = self.styles?[MBFStyleKit.mbfStyleKitFontsKey]?[key]??[MBFStyleKit.mbfStyleKitFontNameKey] as? String {
       font.name = fontName
     }
     
-    if let fontSize = self.styles?["fonts"]?[key]??["size"] as? Float {
+    if let fontSize = self.styles?[MBFStyleKit.mbfStyleKitFontsKey]?[key]??[MBFStyleKit.mbfStyleKitFontsKey] as? Float {
       font.size = CGFloat(fontSize)
     }
     
@@ -130,7 +149,7 @@ public class MBFStyleKit {
     } else {
       resultFont = UIFont.systemFontOfSize(font.size)
     }
-
+    
     
     return resultFont
   }
@@ -150,7 +169,7 @@ public class MBFStyleKit {
     var textAttributes = Dictionary<String,Any>()
     
     textAttributes[NSParagraphStyleAttributeName] = paragraphStyle;
-    textAttributes[NSFontAttributeName] = self.fontForKey("", size: 10)
+    textAttributes[NSFontAttributeName] = self.fontForKey(fontKey, size: fontSize)
     textAttributes[NSForegroundColorAttributeName] = textColor
     
     return textAttributes
