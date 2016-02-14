@@ -15,11 +15,12 @@ public class MBFStyleKit {
   private static let mbfStyleKitFontNameKey = "name"
   private static let mbfStyleKitFontSizeKey = "size"
   private static let mbfStyleKitStylesKey = "styles"
-  private static let mbfStyleKitTextSize = "text-size"
-  private static let mbfStyleKitTextColor = "text-color"
-  private static let mbfStyleKitTextAlignment = "text-alignment"
-  private static let mbfStyleKitParagraphSpacing = "paragraph-spacing"
-  private static let mbfStyleKitLineSpacing = "line-spacing"
+  private static let mbfStyleKitTextFontKey = "font"
+  private static let mbfStyleKitTextSizeKey = "font-size"
+  private static let mbfStyleKitTextColorKey = "font-color"
+  private static let mbfStyleKitTextAlignmentKey = "text-alignment"
+  private static let mbfStyleKitParagraphSpacingKey = "paragraph-spacing"
+  private static let mbfStyleKitLineSpacingKey = "line-spacing"
   
   public var defaultStyle: NSDictionary? {
     
@@ -69,13 +70,12 @@ public class MBFStyleKit {
     var result: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
     result = (red: CGFloat(0.0), green: CGFloat(0), blue: CGFloat(0), alpha: CGFloat(1.0))
     
-
+    
     if let colorString = string {
-      result.red = 2.0
       let components = colorString.componentsSeparatedByString(" ")
       
       if components.count == 4 {
-     
+        
         if let red = Float(components[0]) {
           result.red = CGFloat(red/255.0)
         }
@@ -105,22 +105,24 @@ public class MBFStyleKit {
   
   public func textAttributesForKey(key: String, textAlignment: NSTextAlignment) -> Dictionary<String,Any> {
     var textAttributes = Dictionary<String,Any>()
-    var paragraphAttributes: NSMutableParagraphStyle
+    let paragraphAttributes = NSMutableParagraphStyle()
     
-    let color = self.colorForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextColor] as! String)
-    let textAlignment = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextAlignment] as! Int
-    let paragraphSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitParagraphSpacing] as! Float
-    let lineSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitLineSpacing] as! Float
-    let textSize = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextSize] as! Float
+    let fontColor = self.colorForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextColorKey] as! String)
+    let fontSize = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextSizeKey] as! Float
+    let font = self.fontForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextFontKey] as! String, size: fontSize)
     
-    paragraphAttributes =
-      self.paragraphAttributesWithSpacing(paragraphSpacing,
-        textAlignment: NSTextAlignment(rawValue: textAlignment)!,
-        lineBreakMode: NSLineBreakMode.ByCharWrapping,
-        lineSpacing: lineSpacing)
+    let textAlignment = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextAlignmentKey] as! Int
+    let paragraphSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitParagraphSpacingKey] as! Float
+    let lineSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitLineSpacingKey] as! Float
     
-    textAttributes =
-      self.textAttributesWithFont("", fontSize: textSize, textColor: color, paragraphStyle: paragraphAttributes)
+    paragraphAttributes.paragraphSpacing = CGFloat(paragraphSpacing);
+    paragraphAttributes.alignment = NSTextAlignment(rawValue: textAlignment)!;
+    paragraphAttributes.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+    paragraphAttributes.lineSpacing = CGFloat(lineSpacing);
+
+    textAttributes[NSParagraphStyleAttributeName] = paragraphAttributes;
+    textAttributes[NSFontAttributeName] = font
+    textAttributes[NSForegroundColorAttributeName] = fontColor
     
     if textAlignment != NSTextAlignment.Natural.rawValue {
       paragraphAttributes.alignment = NSTextAlignment(rawValue: textAlignment)!
@@ -134,15 +136,12 @@ public class MBFStyleKit {
     
     var font:(name: String, size: CGFloat)
     
-    font = (name: "", size: 10.0)
+    font = (name: "", size: CGFloat(size))
     
-    if let fontName = self.styles?[MBFStyleKit.mbfStyleKitFontsKey]?[key]??[MBFStyleKit.mbfStyleKitFontNameKey] as? String {
+    if let fontName = self.styles?[MBFStyleKit.mbfStyleKitFontsKey]?[key] as? String {
       font.name = fontName
     }
-    
-    if let fontSize = self.styles?[MBFStyleKit.mbfStyleKitFontsKey]?[key]??[MBFStyleKit.mbfStyleKitFontsKey] as? Float {
-      font.size = CGFloat(fontSize)
-    }
+
     
     if font.name.characters.count > 0 {
       resultFont = UIFont(name: font.name, size: font.size)
@@ -150,29 +149,7 @@ public class MBFStyleKit {
       resultFont = UIFont.systemFontOfSize(font.size)
     }
     
-    
     return resultFont
-  }
-  
-  private func paragraphAttributesWithSpacing(paragraphSpacing: Float, textAlignment: NSTextAlignment, lineBreakMode: NSLineBreakMode, lineSpacing: Float) -> NSMutableParagraphStyle {
-    let paragraphStyle = NSMutableParagraphStyle();
-    
-    paragraphStyle.paragraphSpacing = CGFloat(paragraphSpacing);
-    paragraphStyle.alignment = textAlignment;
-    paragraphStyle.lineBreakMode = lineBreakMode;
-    paragraphStyle.lineSpacing = CGFloat(lineSpacing);
-    
-    return paragraphStyle
-  }
-  
-  private func textAttributesWithFont(fontKey: String, fontSize: Float, textColor: UIColor, paragraphStyle: NSParagraphStyle) -> Dictionary<String,Any> {
-    var textAttributes = Dictionary<String,Any>()
-    
-    textAttributes[NSParagraphStyleAttributeName] = paragraphStyle;
-    textAttributes[NSFontAttributeName] = self.fontForKey(fontKey, size: fontSize)
-    textAttributes[NSForegroundColorAttributeName] = textColor
-    
-    return textAttributes
   }
 }
 
