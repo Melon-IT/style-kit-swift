@@ -12,10 +12,8 @@ public class MBFStyleKit {
   
   private static let mbfStyleKitColorsKey = "colors"
   private static let mbfStyleKitFontsKey = "fonts"
-  private static let mbfStyleKitFontNameKey = "name"
-  private static let mbfStyleKitFontSizeKey = "size"
   private static let mbfStyleKitStylesKey = "styles"
-  private static let mbfStyleKitTextFontKey = "font"
+  private static let mbfStyleKitTextFontKey = "font-name"
   private static let mbfStyleKitTextSizeKey = "font-size"
   private static let mbfStyleKitTextColorKey = "font-color"
   private static let mbfStyleKitTextAlignmentKey = "text-alignment"
