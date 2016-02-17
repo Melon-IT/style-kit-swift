@@ -96,13 +96,13 @@ public class MBFStyleKit {
     return result
   }
   
-  public func textAttributesForKey(key: String) -> Dictionary<String,Any> {
+  public func textAttributesForKey(key: String) -> Dictionary<String,AnyObject> {
     
     return self.textAttributesForKey(key, textAlignment: NSTextAlignment.Natural)
   }
   
-  public func textAttributesForKey(key: String, textAlignment: NSTextAlignment) -> Dictionary<String,Any> {
-    var textAttributes = Dictionary<String,Any>()
+  public func textAttributesForKey(key: String, textAlignment: NSTextAlignment) -> Dictionary<String,AnyObject> {
+    var textAttributes = Dictionary<String,AnyObject>()
     let paragraphAttributes = NSMutableParagraphStyle()
     
     let fontColor = self.colorForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextColorKey] as! String)
