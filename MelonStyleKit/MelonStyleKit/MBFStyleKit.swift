@@ -109,12 +109,12 @@ public class MBFStyleKit {
     let fontSize = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextSizeKey] as! Float
     let font = self.fontForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextFontKey] as! String, size: fontSize)
     
-    let textAlignment = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextAlignmentKey] as! Int
+    let alignment = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitTextAlignmentKey] as! Int
     let paragraphSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitParagraphSpacingKey] as! Float
     let lineSpacing = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key]??[MBFStyleKit.mbfStyleKitLineSpacingKey] as! Float
     
     paragraphAttributes.paragraphSpacing = CGFloat(paragraphSpacing);
-    paragraphAttributes.alignment = NSTextAlignment(rawValue: textAlignment)!;
+    paragraphAttributes.alignment = NSTextAlignment(rawValue: alignment)!;
     paragraphAttributes.lineBreakMode = NSLineBreakMode.ByWordWrapping;
     paragraphAttributes.lineSpacing = CGFloat(lineSpacing);
 
@@ -122,8 +122,8 @@ public class MBFStyleKit {
     textAttributes[NSFontAttributeName] = font
     textAttributes[NSForegroundColorAttributeName] = fontColor
     
-    if textAlignment != NSTextAlignment.Natural.rawValue {
-      paragraphAttributes.alignment = NSTextAlignment(rawValue: textAlignment)!
+    if textAlignment != NSTextAlignment.Natural {
+      paragraphAttributes.alignment = textAlignment
     }
     
     return textAttributes
