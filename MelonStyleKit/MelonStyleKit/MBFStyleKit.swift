@@ -108,7 +108,7 @@ public class MBFStyleKit {
   
   public func existTextAttributesForKey(key: String) -> Bool {
 
-    return self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?["key"] is NSDictionary
+    return self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key] is NSDictionary
   }
   
   public func textAttributesForKey(key: String) -> Dictionary<String,AnyObject> {
