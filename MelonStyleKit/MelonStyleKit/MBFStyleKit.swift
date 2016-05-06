@@ -62,7 +62,10 @@ public class MBFStyleKit {
   public func colorForKey(key: String, alpha: Float) -> UIColor {
     var resultColor: UIColor = UIColor.whiteColor()
     var colorValue: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
-    if let styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
+    if var styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
+      if self.existTextAttributesForKey(styleKey) == false {
+        styleKey = key
+      }
       colorValue = self.decodeColor(self.styles?[MBFStyleKit.mbfStyleKitColorsKey]?[styleKey] as? String)
       
       resultColor = UIColor(red: colorValue.red as CGFloat, green: colorValue.green, blue: colorValue.blue, alpha: colorValue.alpha)
@@ -104,14 +107,8 @@ public class MBFStyleKit {
   }
   
   public func existTextAttributesForKey(key: String) -> Bool {
-    var result: Bool
-    if let styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
-      result = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[styleKey] != nil
-    } else {
-      result = false
-    }
-    
-    return result
+
+    return self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?["key"] is NSDictionary
   }
   
   public func textAttributesForKey(key: String) -> Dictionary<String,AnyObject> {
@@ -123,7 +120,10 @@ public class MBFStyleKit {
     var textAttributes = Dictionary<String,AnyObject>()
     let paragraphAttributes = NSMutableParagraphStyle()
     
-    if let styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
+    if var styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
+      if self.existTextAttributesForKey(styleKey) == false {
+        styleKey = key
+      }
       let fontColor = self.colorForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[styleKey]??[MBFStyleKit.mbfStyleKitTextColorKey] as! String)
       let fontSize = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[styleKey]??[MBFStyleKit.mbfStyleKitTextSizeKey] as! Float
       let font = self.fontForKey(self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[styleKey]??[MBFStyleKit.mbfStyleKitTextFontKey] as! String, size: fontSize)
@@ -156,7 +156,10 @@ public class MBFStyleKit {
     
     font = (name: "", size: CGFloat(size))
     
-    if let styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
+    if var styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
+      if self.existTextAttributesForKey(styleKey) == false {
+        styleKey = key
+      }
       if let fontName = self.styles?[MBFStyleKit.mbfStyleKitFontsKey]?[styleKey] as? String {
         font.name = fontName
       }
