@@ -139,16 +139,13 @@ open class MBFStyleKit {
       let font: UIFont?
       let fontColor: UIColor?
       
-      if let resources = self.styles,
-        let styles = resources[MBFStyleKit.mbfStyleKitStylesKey],
-        let style = styles[styleKey],
-        let styleItem = style,
-        let colorKey = styleItem[MBFStyleKit.mbfStyleKitTextColorKey] as? String,
-        let fontSize = styleItem[MBFStyleKit.mbfStyleKitTextSizeKey] as? Float,
-        let fontKey = styleItem[MBFStyleKit.mbfStyleKitTextFontKey] as? String,
-        let alignment = styleItem[MBFStyleKit.mbfStyleKitTextAlignmentKey] as? Int,
-        let paragraphSpacing = styleItem[MBFStyleKit.mbfStyleKitParagraphSpacingKey] as? Float,
-        let lineSpacing = styleItem[MBFStyleKit.mbfStyleKitLineSpacingKey] as? Float {
+      if let style = self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[styleKey] as? Dictionary<String, AnyObject>,
+        let colorKey = style[MBFStyleKit.mbfStyleKitTextColorKey] as? String,
+        let fontSize = style[MBFStyleKit.mbfStyleKitTextSizeKey] as? Float,
+        let fontKey = style[MBFStyleKit.mbfStyleKitTextFontKey] as? String,
+        let alignment = style[MBFStyleKit.mbfStyleKitTextAlignmentKey] as? Int,
+        let paragraphSpacing = style[MBFStyleKit.mbfStyleKitParagraphSpacingKey] as? Float,
+        let lineSpacing = style[MBFStyleKit.mbfStyleKitLineSpacingKey] as? Float {
         
         fontColor = self.colorForKey(colorKey)
         font = self.fontForKey(fontKey, size: fontSize)
