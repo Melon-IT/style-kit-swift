@@ -183,7 +183,7 @@ open class MBFStyleKit {
         font.name = fontName
       }
       
-      if font.name.characters.count > 0 {
+      if font.name.count > 0 {
         resultFont = UIFont(name: font.name, size: font.size)
       } else {
         resultFont = UIFont.systemFont(ofSize: font.size)
