@@ -41,13 +41,13 @@ open class MBFStyleKit {
   public init() {}
   
   public init(resourceName: String) {
-    self.loadStylesFromResource(resourceName)
+    self.prepareFromBundle(resourceName)
   }
   
-  open func loadStylesFromResource(_ resourceName: String?) {
+  open func prepareFromBundle(_ resourceName: String?) {
     let resourcePath =
       Bundle.main.path(forResource: resourceName,
-                                            ofType: "plist")
+                       ofType: "plist")
     
     if let path = resourcePath {
       self.styles = NSDictionary(contentsOfFile: path) as? Dictionary<String,AnyObject>
@@ -71,7 +71,7 @@ open class MBFStyleKit {
       if let resources = self.styles,
         let colors = resources[MBFStyleKit.mbfStyleKitColorsKey],
         let colorKey = colors[styleKey] as? String {
-        colorValue = self.decodeColor(colorKey)
+        colorValue = self.decodeColorFromString(colorKey)
         
         resultColor = UIColor(red: colorValue.red,
                               green: colorValue.green,
@@ -83,8 +83,8 @@ open class MBFStyleKit {
     return resultColor
   }
   
-  fileprivate func decodeColor(_ colorString: String) ->
-    (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+  fileprivate func decodeColorFromString(_ colorString: String) ->
+    (red: CGFloat,green: CGFloat, blue: CGFloat, alpha: CGFloat) {
       
       var result: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
       result = (red: CGFloat(0.0),
@@ -126,7 +126,7 @@ open class MBFStyleKit {
   }
   
   open func textAttributesForKey(_ key: String,
-                                   textAlignment: NSTextAlignment) -> [NSAttributedStringKey : Any] {
+                                 textAlignment: NSTextAlignment) -> [NSAttributedStringKey : Any] {
     
     var textAttributes = Dictionary<NSAttributedStringKey,Any>()
     let paragraphAttributes = NSMutableParagraphStyle()
@@ -158,7 +158,7 @@ open class MBFStyleKit {
         textAttributes[NSAttributedStringKey.paragraphStyle] = paragraphAttributes
         textAttributes[NSAttributedStringKey.font] = font
         textAttributes[NSAttributedStringKey.foregroundColor] = fontColor
-
+        
         if textAlignment != NSTextAlignment.natural {
           paragraphAttributes.alignment = textAlignment
         }
