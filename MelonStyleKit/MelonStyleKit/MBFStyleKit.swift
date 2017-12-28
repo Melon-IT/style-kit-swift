@@ -12,7 +12,7 @@ public protocol MBFStyleKitKeyDecoderProtocol: class {
   func styleIdentifierForKey(_ key: String) -> String
 }
 
-open class MBFStyleKit {
+public class MBFStyleKit {
   
   private static let mbfStyleKitColorsKey = "colors"
   private static let mbfStyleKitFontsKey = "fonts"
@@ -24,14 +24,14 @@ open class MBFStyleKit {
   private static let mbfStyleKitParagraphSpacingKey = "paragraph-spacing"
   private static let mbfStyleKitLineSpacingKey = "line-spacing"
   
-  open weak var styleKeyDecoderDelegate: MBFStyleKitKeyDecoderProtocol?
+  public weak var styleKeyDecoderDelegate: MBFStyleKitKeyDecoderProtocol?
   
-  open var defaultStyle: NSDictionary? {
+  public var defaultStyle: NSDictionary? {
     
     return nil
   }
   
-  open var defaultColor: UIColor? {
+  public var defaultColor: UIColor? {
     
     return nil
   }
@@ -44,7 +44,7 @@ open class MBFStyleKit {
     self.prepareFromBundle(resourceName)
   }
   
-  open func prepareFromBundle(_ resourceName: String?) {
+  public func prepareFromBundle(_ resourceName: String?) {
     let resourcePath =
       Bundle.main.path(forResource: resourceName,
                        ofType: "plist")
@@ -54,12 +54,12 @@ open class MBFStyleKit {
     }
   }
   
-  open func colorForKey(_ key: String) -> UIColor {
+  public func colorForKey(_ key: String) -> UIColor {
     
     return self.colorForKey(key, alpha: 1.0)
   }
   
-  open func colorForKey(_ key: String, alpha: Float) -> UIColor {
+  public func colorForKey(_ key: String, alpha: Float) -> UIColor {
     var resultColor: UIColor = UIColor.white
     var colorValue: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
     
@@ -115,17 +115,17 @@ open class MBFStyleKit {
       return result
   }
   
-  open func existTextAttributesForKey(_ key: String) -> Bool {
+  public func existTextAttributesForKey(_ key: String) -> Bool {
     
     return self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key] is Dictionary<String, AnyObject>
   }
   
-  open func textAttributesForKey(_ key: String) -> [NSAttributedStringKey : Any] {
+  public func textAttributesForKey(_ key: String) -> [NSAttributedStringKey : Any] {
     
     return self.textAttributesForKey(key, textAlignment: NSTextAlignment.natural)
   }
   
-  open func textAttributesForKey(_ key: String,
+  public func textAttributesForKey(_ key: String,
                                  textAlignment: NSTextAlignment) -> [NSAttributedStringKey : Any] {
     
     var textAttributes = Dictionary<NSAttributedStringKey,Any>()
@@ -168,7 +168,7 @@ open class MBFStyleKit {
     return textAttributes
   }
   
-  open func fontForKey(_ key: String, size: Float) -> UIFont? {
+  public func fontForKey(_ key: String, size: Float) -> UIFont? {
     var resultFont: UIFont?
     var font:(name: String, size: CGFloat)
     
