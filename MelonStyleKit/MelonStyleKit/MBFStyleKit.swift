@@ -120,15 +120,15 @@ public class MBFStyleKit {
     return self.styles?[MBFStyleKit.mbfStyleKitStylesKey]?[key] is Dictionary<String, AnyObject>
   }
   
-  public func textAttributesForKey(_ key: String) -> [NSAttributedStringKey : Any] {
+  public func textAttributesForKey(_ key: String) -> [NSAttributedString.Key : Any] {
     
     return self.textAttributesForKey(key, textAlignment: NSTextAlignment.natural)
   }
   
   public func textAttributesForKey(_ key: String,
-                                 textAlignment: NSTextAlignment) -> [NSAttributedStringKey : Any] {
+                                 textAlignment: NSTextAlignment) -> [NSAttributedString.Key : Any] {
     
-    var textAttributes = Dictionary<NSAttributedStringKey,Any>()
+    var textAttributes = Dictionary<NSAttributedString.Key,Any>()
     let paragraphAttributes = NSMutableParagraphStyle()
     
     if var styleKey = self.styleKeyDecoderDelegate?.styleIdentifierForKey(key) {
@@ -155,9 +155,9 @@ public class MBFStyleKit {
         paragraphAttributes.lineBreakMode = NSLineBreakMode.byWordWrapping;
         paragraphAttributes.lineSpacing = CGFloat(lineSpacing);
         
-        textAttributes[NSAttributedStringKey.paragraphStyle] = paragraphAttributes
-        textAttributes[NSAttributedStringKey.font] = font
-        textAttributes[NSAttributedStringKey.foregroundColor] = fontColor
+        textAttributes[NSAttributedString.Key.paragraphStyle] = paragraphAttributes
+        textAttributes[NSAttributedString.Key.font] = font
+        textAttributes[NSAttributedString.Key.foregroundColor] = fontColor
         
         if textAlignment != NSTextAlignment.natural {
           paragraphAttributes.alignment = textAlignment
