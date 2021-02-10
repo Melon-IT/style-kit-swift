@@ -10,7 +10,7 @@
 		4023C7881C67AE3400EEB929 /* MelonStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4023C7871C67AE3400EEB929 /* MelonStyleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4023C78F1C67AE3500EEB929 /* MelonStyleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4023C7841C67AE3400EEB929 /* MelonStyleKit.framework */; };
 		4023C7941C67AE3500EEB929 /* MelonStyleKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4023C7931C67AE3500EEB929 /* MelonStyleKitTests.swift */; };
-		408B25611C6A62AA00E9C360 /* MBFStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408B25601C6A62AA00E9C360 /* MBFStyleKit.swift */; };
+		408B25611C6A62AA00E9C360 /* MStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408B25601C6A62AA00E9C360 /* MStyleKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +30,7 @@
 		4023C78E1C67AE3500EEB929 /* MelonStyleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MelonStyleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4023C7931C67AE3500EEB929 /* MelonStyleKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelonStyleKitTests.swift; sourceTree = "<group>"; };
 		4023C7951C67AE3500EEB929 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		408B25601C6A62AA00E9C360 /* MBFStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBFStyleKit.swift; sourceTree = "<group>"; };
+		408B25601C6A62AA00E9C360 /* MStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MStyleKit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +92,7 @@
 		408B255F1C6A628F00E9C360 /* StyleKit */ = {
 			isa = PBXGroup;
 			children = (
-				408B25601C6A62AA00E9C360 /* MBFStyleKit.swift */,
+				408B25601C6A62AA00E9C360 /* MStyleKit.swift */,
 			);
 			name = StyleKit;
 			sourceTree = "<group>";
@@ -211,7 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				408B25611C6A62AA00E9C360 /* MBFStyleKit.swift in Sources */,
+				408B25611C6A62AA00E9C360 /* MStyleKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
