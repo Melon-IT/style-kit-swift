@@ -138,7 +138,7 @@ public class MStyleKit {
     return self.collection?[MStyleKit.stylesKey]?[key] is Dictionary<String, AnyObject>
   }
   
-  private func color(for key: String,
+  public func color(for key: String,
                      withAlpha: Float = 1.0) -> UIColor {
     
     var result = self.defaultColor
