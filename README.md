@@ -2,7 +2,7 @@
 
 To create an instance of the StyleKit:
 ```swift
-let styleKit = MBFStyleKit()
+let styleKit = MStyleKit()
 ```
 
 To load styles from resources:

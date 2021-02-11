@@ -14,6 +14,6 @@ FOUNDATION_EXPORT double MelonStyleKitVersionNumber;
 //! Project version string for MelonStyleKit.
 FOUNDATION_EXPORT const unsigned char MelonStyleKitVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <MelonStyleKit/PublicHeader.h>
+// In this header, you should import all the  headers of your framework using statements like #import <MelonStyleKit/Header.h>
 
 
