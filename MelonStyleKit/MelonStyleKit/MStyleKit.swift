@@ -6,7 +6,7 @@
 //  Copyright © 2016 Melon. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 typealias RGBA = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
 
@@ -30,27 +30,27 @@ public class MStyleKit {
   
   //MARK: Delegate
   /**
-   Delegate that determine prefix for styles specific to the concrete device.
+   The Delegate that determine prefix for styles specific to the concrete device type.
    */
   public weak var keyDelegate: MStyleKitDeviceKeyDelegate?
   
   //MARK: Default style
   private var defaultColor: UIColor = UIColor.black
-  //private var defaultStyle: Dictionary<String,AnyObject>?
+  //private var defaultStyle: [String: AnyObject]?
   
   //MARK: Collection
   /**
-   Styles definitions read from .plist resources
+   Styles definitions from the .plist file.
    */
-  private var collection: Dictionary<String,AnyObject>?
+  private var collection: [String: AnyObject]?
   
   //MARK: Initializing
   /**
    Creates the StyleKit object with resources from a bundle.
    
    - parameters:
-      - name: Name of the resource .plist file with style definitions.
-      - bundle: Name of the bundle where resource file is located.
+   - name: Name of the .plist file.
+   - bundle: Name of the bundle where the .plist file is located.
    */
   public init(resource name: String,
               from bundle:Bundle) {
@@ -61,7 +61,7 @@ public class MStyleKit {
    Creates the StyleKit object with resources from the main bundle.
    
    - parameters:
-      - name: Name of the resource .plist file with style definitions.
+   - name: Name of the .plist file.
    */
   public convenience init(resource name: String) {
     self.init(resource: name, from: Bundle.main)
@@ -72,16 +72,17 @@ public class MStyleKit {
    Make collection of attributes for the `NSAttributedString`.
    
    - parameters:
-      - key: Identifier for particular style in collection.
-      - alignment: Value that if it exist it override text alignment property. This argument is optional.
+   - key: Identifier for particular style in collection.
+   - alignment: Optional value that if it exist it override text alignment property.
    */
   public func attributes(for key: String,
                          alignment: NSTextAlignment = .natural) -> [NSAttributedString.Key : Any] {
     
-    var textAttributes = Dictionary<NSAttributedString.Key,Any>()
+    var textAttributes = [NSAttributedString.Key: Any]()
     let paragraphAttributes = NSMutableParagraphStyle()
     
     if var styleKey = self.keyDelegate?.styleIdentifier(for: key) {
+      
       if self.existAttributes(for: styleKey) == false {
         styleKey = key
       }
@@ -89,7 +90,7 @@ public class MStyleKit {
       let font: UIFont?
       let fontColor: UIColor?
       
-      if let style = self.collection?[MStyleKit.stylesKey]?[styleKey] as? Dictionary<String, AnyObject>,
+      if let style = self.collection?[MStyleKit.stylesKey]?[styleKey] as? [String: AnyObject],
          let colorKey = style[MStyleKit.textColorKey] as? String,
          let fontSize = style[MStyleKit.textSizeKey] as? Float,
          let fontKey = style[MStyleKit.fontKey] as? String,
@@ -128,18 +129,18 @@ public class MStyleKit {
       self.collection =
         try! PropertyListSerialization.propertyList(from: data,
                                                     options: PropertyListSerialization.ReadOptions.mutableContainers,
-                                                    format: nil) as! Dictionary<String, AnyObject>
+                                                    format: nil) as! [String: AnyObject]
     }
   }
   
   //MARK: Retrieving information from resources
   private func existAttributes(for key: String) -> Bool {
     
-    return self.collection?[MStyleKit.stylesKey]?[key] is Dictionary<String, AnyObject>
+    return self.collection?[MStyleKit.stylesKey]?[key] is [String: AnyObject]
   }
   
   public func color(for key: String,
-                     withAlpha: Float = 1.0) -> UIColor {
+                    withAlpha: Float = 1.0) -> UIColor {
     
     var result = self.defaultColor
     
@@ -189,29 +190,15 @@ public class MStyleKit {
   
   private func decodeColor(from string: String) -> RGBA {
     
-    var result = (red: CGFloat(0.0),
-                  green: CGFloat(0),
-                  blue: CGFloat(0),
-                  alpha: CGFloat(1.0))
+    var result = RGBA(0,0,0,0)
     
     let components = string.components(separatedBy: " ")
     
     if components.count == 4 {
-      if let red = Float(components[0]) {
-        result.red = CGFloat(red/255.0)
-      }
-      
-      if let green = Float(components[1]) {
-        result.green = CGFloat(green/255.0)
-      }
-      
-      if let blue = Float(components[2]) {
-        result.blue = CGFloat(blue/255.0)
-      }
-      
-      if let alpha = Float(components[3]) {
-        result.alpha = CGFloat(alpha)
-      }
+      result.red = CGFloat((Float(components[0]) ?? 0)/255)
+      result.green = CGFloat((Float(components[1]) ?? 0)/255)
+      result.blue = CGFloat((Float(components[2]) ?? 0)/255)
+      result.alpha = CGFloat((Float(components[3]) ?? 1))
     }
     
     return result
